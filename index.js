@@ -5,10 +5,21 @@ const path = require('path');
 
 const server = http.createServer( ( req, res ) => {
   res.setHeader('Content-Type', 'text/html');
+  let filePath = './views'; 
   
-  let url = '.' + req.url;
+  console.log(filePath);
+
+  if (req.url == "/") {
+    filePath += "/index.html";  
+  } else if (req.url == '/about') {
+    filePath += "/about.html";
+  } else if ( req.url == "/contact") {
+    filePath += "/contact.html";
+  } else {
+    console.log("ERROR: unknown page requested.");
+  }
   
-  fs.readFile('./views/index.html', (err, data) => {
+  fs.readFile(filePath, (err, data) => {
     if (err) {
       console.log(err);
       res.end();
